@@ -1,459 +1,115 @@
-<!doctype html>
-<html lang=fr>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-<meta charset=UTF-8>
-<meta name=author content="Denis ZONVIDE">
-<meta name=copyright content="© 2025 Denis ZONVIDE">
-<meta name=description content="Site développé par Denis ZONVIDE.">
-<meta charset=UTF-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>K'ontrol - Location de Meubles et Vaisselle</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel=stylesheet>
-<script src=https://cdn.tailwindcss.com></script>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
-<link href=https://unpkg.com/aos@2.3.1/dist/aos.css rel=stylesheet>
-<script src=https://unpkg.com/aos@2.3.1/dist/aos.js></script>
-<script>tailwind.config={theme:{extend:{fontFamily:{"Arial":['"Arial"',"cursive"],montserrat:["Montserrat","sans-serif"]},colors:{primary:"#eb5f5f",secondary:"#c40000",dark:"#1a1a1a",light:"#f8f8f8"},animation:{float:"float 6s ease-in-out infinite","fade-in":"fadeIn 1.5s ease-in-out"},keyframes:{float:{"0%, 100%":{transform:"translateY(0)"},"50%":{transform:"translateY(-20px)"}},fadeIn:{"0%":{opacity:"0"},"100%":{opacity:"1"}}}}}}</script>
-<style>.logo-text{position:relative}.logo-text::after{content:"'";position:absolute;color:#c40000;font-family:'Arial',cursive}.hero-image{background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');background-size:cover;background-position:center;background-repeat:no-repeat}.gallery-item{transition:all .3s ease}.gallery-item:hover{transform:scale(1.05);box-shadow:0 10px 25px rgba(0,0,0,.2)}.nav-link{position:relative}.nav-link::after{content:'';position:absolute;width:0;height:2px;bottom:-5px;left:0;background-color:#c40000;transition:width .3s ease}.nav-link:hover::after{width:100%}.btn-primary{transition:all .3s ease;position:relative;overflow:hidden}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(196,0,0,.3)}.btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:.5s}.btn-primary:hover::after{left:100%}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OblivionXC - Créateur Numérique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      animation: fadeInDown 1.5s ease-out;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      margin: 0;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px #000;
+    }
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+    img.logo {
+      max-width: 140px;
+      margin-top: 20px;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      transition: transform 0.3s ease;
+    }
+    img.logo:hover {
+      transform: scale(1.1);
+    }
+    section {
+      padding: 40px 20px;
+      animation: fadeInUp 2s ease-out;
+    }
+    .contact {
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      max-width: 700px;
+      margin: auto;
+      backdrop-filter: blur(5px);
+    }
+    .contact a {
+      color: #00eaff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      animation: fadeIn 3s ease-out;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
-<body class="font-montserrat bg-light">
-<header class="bg-white py-10 shadow-md">
-<div class="container mx-auto px-4 text-center">
-<h1 class="text-5xl md:text-6xl font-extablod-vibes mb-4 text-gray-900 text-outline">
-<span class=logo-text>K</span>ontrol
-</h1>
-<p class="text-xl md:text-2xl text-gray-700">Logistique Evénementiel-Inphographie-Impressionnumerique</p>
-</div>
+<body>
+
+<header>
+  <h1>OblivionXC</h1>
+  <p>Créateur numérique & explorateur tech</p>
+  <img src="https://media.craiyon.com/2025-04-02/A_bcuP7wRXavNeM1xebDRg.webp" alt="Logo XC" class="logo">
 </header>
-<nav class="bg-white sticky top-0 z-50 shadow-md">
-<div class="container mx-auto px-4 py-4 flex justify-center items-center">
-<div class="hidden md:flex space-x-8">
-<a href=#accueil class="nav-link text-dark font-medium hover:text-secondary transition-colors duration-300">Accueil</a>
-<a href=#apropos class="nav-link text-dark font-medium hover:text-secondary transition-colors duration-300">À propos</a>
-<a href=#services class="nav-link text-dark font-medium hover:text-secondary transition-colors duration-300">Services</a>
-<a href=#galerie class="nav-link text-dark font-medium hover:text-secondary transition-colors duration-300">Galerie</a>
-<a href=#contact class="nav-link text-dark font-medium hover:text-secondary transition-colors duration-300">Contact</a>
-</div>
-<div class=md:hidden>
-<button id=mobile-menu-button class="text-dark focus:outline-none">
-<i class="fas fa-bars text-2xl"></i>
-</button>
-</div>
-</div>
-<div id=mobile-menu class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
-<div class="flex flex-col space-y-4">
-<a href=#accueil class="text-dark font-medium hover:text-secondary transition-colors duration-300">Accueil</a>
-<a href=#apropos class="text-dark font-medium hover:text-secondary transition-colors duration-300">À propos</a>
-<a href=#services class="text-dark font-medium hover:text-secondary transition-colors duration-300">Services</a>
-<a href=#galerie class="text-dark font-medium hover:text-secondary transition-colors duration-300">Galerie</a>
-<a href=#contact class="text-dark font-medium hover:text-secondary transition-colors duration-300">Contact</a>
-</div>
-</div>
-</nav>
-<section id=accueil class="hero-image min-h-screen flex items-center justify-center text-white relative overflow-hidden">
-<div class="absolute inset-0 bg-black opacity-40"></div>
-<div class="container mx-auto px-4 text-center z-10" data-aos=fade-up data-aos-duration=1000>
-<h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">Élevez vos événements avec style</h1>
-<p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Des équipements élégants pour mariages, séminaires, soirées et plus encore.</p>
-<a href=#contact class="btn-primary inline-block bg-secondary text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-primary">Réserver maintenant</a>
-</div>
-<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-<a href=#apropos class="text-white text-3xl">
-<i class="fas fa-chevron-down"></i>
-</a>
-</div>
+
+<section>
+  <h2 style="text-align:center;">💡 À propos de moi</h2>
+  <p style="max-width:700px; margin:auto; text-align:center;">
+    Je suis <strong>OblivionXC</strong>, un passionné de technologie, d’automatisation, de design et de solutions numériques. Ce site est mon hub personnel pour partager mes projets, mes idées et mes contacts.
+  </p>
 </section>
-<section id=apropos class="py-20 bg-white">
-<div class="container mx-auto px-4">
-<div class="text-center mb-16" data-aos=fade-up>
-<h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">À propos de <span class=logo-text>K</span>ontrol</h2>
-<div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-<p class="text-lg text-gray-700 max-w-3xl mx-auto">
-K'ontrol est une entreprise spécialisée dans la location de mobilier et de vaisselle haut de gamme. Nous accompagnons vos événements avec des prestations sur mesure et une attention particulière aux détails.
-</p>
-</div>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="bg-light p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300" data-aos=fade-up data-aos-delay=100>
-<div class="text-secondary text-4xl mb-4">
-<i class="fas fa-calendar-check"></i>
-</div>
-<h3 class="text-xl font-bold mb-3 text-dark">Événements sur mesure</h3>
-<p class=text-gray-700>Nous adaptons nos services à vos besoins spécifiques pour chaque occasion.</p>
-</div>
-<div class="bg-light p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300" data-aos=fade-up data-aos-delay=200>
-<div class="text-secondary text-4xl mb-4">
-<i class="fas fa-star"></i>
-</div>
-<h3 class="text-xl font-bold mb-3 text-dark">Qualité premium</h3>
-<p class=text-gray-700>Nos articles sont sélectionnés avec soin pour leur élégance et leur durabilité.</p>
-</div>
-<div class="bg-light p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300" data-aos=fade-up data-aos-delay=300>
-<div class="text-secondary text-4xl mb-4">
-<i class="fas fa-truck"></i>
-</div>
-<h3 class="text-xl font-bold mb-3 text-dark">Service complet</h3>
-<p class=text-gray-700>Livraison, installation et récupération incluses dans nos prestations.</p>
-</div>
-</div>
-</div>
+
+<section class="contact">
+  <h2>📱 Me contacter</h2>
+  <p><strong>Surnom :</strong> OblivionXC</p>
+  <p><strong>WhatsApp Togo :</strong> <a href="https://wa.me/22891474045" target="_blank">+228 91 47 40 45</a></p>
+  <p><strong>WhatsApp Côte d’Ivoire :</strong> <a href="https://wa.me/2250508054161" target="_blank">+225 05 08 05 41 61</a></p>
+  <p><strong>Email :</strong> <a href="mailto:tonemail@example.com">zonvidedenis5@icloud.com</a></p>
+  <p><strong>Adresse :</strong> Lome, Togo</p>
 </section>
-<section id="services" class="py-20 bg-gray-100">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-16" data-aos="fade-up">
-      <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Nos Services</h2>
-      <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-      <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-        Découvrez notre gamme complète de services pour rendre votre événement inoubliable.
-      </p>
-    </div>
 
-    <!-- Grille unique pour tous les services -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Location de Tente -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Location de Tente</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Chapiteaux (50 à 4000 m²)</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Garden (9, 25, 100 m²)</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Bâche ordinaire</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Pergola</li>
-        </ul>
-      </div>
-
-      <!-- Mobilier de Stand -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up" data-aos-delay="100">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Mobilier de Stand</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Table / Table basse</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> TV & Support TV</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Frigo</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Guéridon / Présentoir / Comptoir</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Fauteuil</li>
-        </ul>
-      </div>
-
-      <!-- Mobilier de Banquet -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up" data-aos-delay="200">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Mobilier de Banquet</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Chaises (Napoleon, VIP, Champêtre, etc.)</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Chaise Hirondelle / Médaillon / Molaga</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Tréteaux rectangulaires & ronds</li>
-        </ul>
-      </div>
-
-      <!-- Location de Stand -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up" data-aos-delay="300">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Location de Stand</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Stand intérieur</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Stand extérieur (Garden 9 & 25 m²)</li>
-        </ul>
-      </div>
-
-      <!-- Sono -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up" data-aos-delay="400">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Sono</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Écran</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Podium</li>
-        </ul>
-      </div>
-
-      <!-- Lumière -->
-      <div class="bg-white p-8 rounded-lg shadow-md flex flex-col" data-aos="fade-up" data-aos-delay="500">
-        <h3 class="text-2xl font-bold mb-4 text-secondary">Lumière</h3>
-        <ul class="space-y-3 flex-grow">
-          <li><i class="fas fa-check text-secondary mr-2"></i> Projecteur</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> Guirlande</li>
-          <li><i class="fas fa-check text-secondary mr-2"></i> ParLED</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-<section id=galerie class="py-20 bg-white">
-<div class="container mx-auto px-4">
-<div class="text-center mb-16" data-aos=fade-up>
-<h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Notre Galerie</h2>
-<div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-<p class="text-lg text-gray-700 max-w-3xl mx-auto">
-Découvrez notre sélection de meubles et vaisselle pour inspirer votre prochain événement.
-</p>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src="salon.jpg" alt="Chaise design" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=200>
-<img src=sl.jpg alt="Service de vaisselle" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tente1.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=100>
-<img src="table.jpg" alt="Apple" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tr.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=100>
-<img src="tente.jpg" alt="Apple" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=200>
-<img src=tente2.jpg alt="Verres cristal" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tl.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tente3.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="py-20 bg-gray-100">
-<div class="container mx-auto px-4">
-<div class="text-center mb-16" data-aos=fade-up>
-<h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Ils nous ont fait confiance</h2>
-<div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-</div>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="bg-white p-8 rounded-lg shadow-md" data-aos=fade-up data-aos-delay=100>
-<div class="flex items-center mb-4">
-<div class="text-yellow-400 mr-2">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-</div>
-</div>
-<p class="text-gray-700 mb-6">"K'ontrol a fourni tout le mobilier pour notre mariage. Le service était impeccable et les articles étaient d'une qualité exceptionnelle. Tout le monde a complimenté l'élégance des chaises et des tables."</p>
-<div class="flex items-center">
-<div class="bg-secondary w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">SM</div>
-<div>
-<h4 class="font-bold text-dark">Sophie Martin</h4>
-<p class=text-gray-600>Mariage à Bordeaux</p>
-</div>
-</div>
-</div>
-<div class="bg-white p-8 rounded-lg shadow-md" data-aos=fade-up data-aos-delay=200>
-<div class="flex items-center mb-4">
-<div class="text-yellow-400 mr-2">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-</div>
-</div>
-<p class="text-gray-700 mb-6">"Pour notre séminaire d'entreprise, nous avons loué des tables et des chaises. La livraison était ponctuelle, le matériel en parfait état. Je recommande vivement K'ontrol pour tout événement professionnel."</p>
-<div class="flex items-center">
-<div class="bg-secondary w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">TD</div>
-<div>
-<h4 class="font-bold text-dark">Thomas Dubois</h4>
-<p class=text-gray-600>Directeur Marketing</p>
-</div>
-</div>
-</div>
-<div class="bg-white p-8 rounded-lg shadow-md" data-aos=fade-up data-aos-delay=300>
-<div class="flex items-center mb-4">
-<div class="text-yellow-400 mr-2">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star-half-alt"></i>
-</div>
-</div>
-<p class="text-gray-700 mb-6">"La vaisselle de K'ontrol a sublimé notre dîner de gala. Les verres à vin et les assiettes ont fait toute la différence. Service professionnel et réactif. Nous ferons à nouveau appel à eux."</p>
-<div class="flex items-center">
-<div class="bg-secondary w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">CL</div>
-<div>
-<h4 class="font-bold text-dark">Caroline Leroy</h4>
-<p class=text-gray-600>Événementiel Premium</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id=contact class="py-20 bg-white">
-<div class="container mx-auto px-4">
-<div class="text-center mb-16" data-aos=fade-up>
-<h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Contactez-nous</h2>
-<div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-<p class="text-lg text-gray-700 max-w-3xl mx-auto">
-Prêt à organiser votre événement ? Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
-</p>
-</div>
-<div class="grid md:grid-cols-2 gap-12">
-<div data-aos=fade-right>
-<form class=space-y-6 id=contactForm>
-<div>
-<label for=name class="block text-gray-700 font-medium mb-2">Nom complet</label>
-<input type="text" id="name" name="name" required minlength="2" class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] focus:border-transparent" placeholder="Denis ZONVIDE" />
-</div>
-<div>
-<label for=email class="block text-gray-700 font-medium mb-2">Adresse email</label>
-<input type="text" id="name" name="name" required minlength="2" class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] focus:border-transparent" placeholder="exemple@gmail.com" />
-</div>
-<div>
-<label for=phone class="block text-gray-700 font-medium mb-2">Téléphone</label>
-<input type="text" id="name" name="name" required minlength="2" class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] focus:border-transparent" placeholder="+2250767431267" />
-</div>
-<div>
-<label for=message class="block text-gray-700 font-medium mb-2">Votre message</label>
-<input type="text" id="name" name="name" required minlength="2" class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] focus:border-transparent" placeholder="Je veux ..." />
-</div>
-<button type=submit class="btn-primary w-full bg-secondary text-white px-6 py-3 rounded-lg font-medium text-lg hover:bg-primary transition duration-300">
-Envoyer votre demande
-</button>
-</form>
-</div>
-<div data-aos=fade-left>
-<div class="bg-light p-8 rounded-lg shadow-md h-full">
-<h3 class="text-2xl font-bold mb-6 text-secondary">Nos coordonnées</h3>
-<div class=space-y-6>
-<div class="flex items-start">
-<div class="text-secondary mr-4 mt-1">
-<i class="fas fa-map-marker-alt text-xl"></i>
-</div>
-<div>
-<h4 class="font-bold text-dark mb-1">Adresse</h4>
-<p class=text-gray-700> Rosier Programme 1 Barriere 2 Villa 12</p>
-</div>
-</div>
-<div class="flex items-start">
-<div class="text-secondary mr-4 mt-1">
-<i class="fas fa-phone-alt text-xl"></i>
-</div>
-<div>
-<h4 class="font-bold text-dark mb-1">Téléphone</h4>
-<p class=text-gray-700>+225 0143398868</p>
-<p class=text-gray-700>+225 0757126554</p>
-</div>
-</div>
-<div class="flex items-start">
-<div class="text-secondary mr-4 mt-1">
-<i class="fas fa-envelope text-xl"></i>
-</div>
-<div>
-<h4 class="font-bold text-dark mb-1">Email</h4>
-<p class=text-gray-700>kontrol@kontrol.ci</p>
-</div>
-</div>
-<div class="flex items-start">
-<div class="text-secondary mr-4 mt-1">
-<i class="fas fa-clock text-xl"></i>
-</div>
-<div>
-<h4 class="font-bold text-dark mb-1">Horaires</h4>
-<p class=text-gray-700>Lundi - Samedi: 8h - 18h</p>
-<p class=text-gray-700>Nos services sont disponibles 24/24</p>
-</div>
-</div>
-</div>
-<div class=mt-8>
-<h4 class="font-bold text-dark mb-4">Suivez-nous</h4>
-<div class="flex space-x-4">
-<a href=# class="text-secondary hover:text-primary text-2xl transition duration-300">
-<i class="fab fa-facebook"></i>
-</a>
-<a href=# class="text-secondary hover:text-primary text-2xl transition duration-300">
-<i class="fab fa-instagram"></i>
-</a>
-<a href=# class="text-secondary hover:text-primary text-2xl transition duration-300">
-<i class="fab fa-tiktok"></i>
-</a>
-<a href=# class="text-secondary hover:text-primary text-2xl transition duration-300">
-<i class="fab fa-telegram"></i>
-<a href=# class="text-secondary hover:text-primary text-2xl transition duration-300">
-<i class="fab fa-whatsapp"></i>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</script>
-<footer class="bg-dark text-white py-12">
-<div class="container mx-auto px-4">
-<div class="grid md:grid-cols-4 gap-8">
-<div>
-<h3 class="text-xl font-bold mb-4"><span class=logo-text>K</span>ontrol</h3>
-<p class=text-gray-400>Location de meubles et vaisselle haut de gamme pour vos événements professionnels et privés.</p>
-</div>
-<div>
-<h4 class="text-lg font-bold mb-4">Liens rapides</h4>
-<ul class=space-y-2>
-<li><a href=#accueil class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
-<li><a href=#apropos class="text-gray-400 hover:text-white transition duration-300">À propos</a></li>
-<li><a href=#services class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
-<li><a href=#galerie class="text-gray-400 hover:text-white transition duration-300">Galerie</a></li>
-<li><a href=#contact class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-lg font-bold mb-4">Services</h4>
-<ul class=space-y-2>
-<li><a href=# class="text-gray-400 hover:text-white transition duration-300">Location mobilier</a></li>
-<li><a href=# class="text-gray-400 hover:text-white transition duration-300">Location vaisselle</a></li>
-<li><a href=# class="text-gray-400 hover:text-white transition duration-300">Conseil événementiel</a></li>
-<li><a href=# class="text-gray-400 hover:text-white transition duration-300">Livraison et installation</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-lg font-bold mb-4">Newsletter</h4>
-<p class="text-gray-400 mb-4">Abonnez-vous pour recevoir nos offres spéciales.</p>
-<form class=flex>
-<input type=email placeholder="Votre email" class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-dark">
-<button type=submit class="bg-secondary text-white px-4 py-2 rounded-r-lg hover:bg-primary transition duration-300">
-<i class="fas fa-paper-plane"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-<p>&copy; <span id=year></span> K<span class=apostrophe>'</span>ontrol | realisé par Denis OblivionXC tudio</a> </p>
-</div>
-</div>
+<footer>
+  <p>&copy; 2025 OblivionXC. Powered by passion & pixels.</p>
 </footer>
-<button id=backToTop class="fixed bottom-8 right-8 bg-secondary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary">
-<i class="fas fa-arrow-up"></i>
-</button>
-<script>const _0x4164c2=_0x1341;(function(t,o){const n=_0x1341,e=_0x5b56();for(;;)try{if(514758===parseInt(n(479))/1+-parseInt(n(487))/2+-parseInt(n(484))/3+-parseInt(n(473))/4+-parseInt(n(472))/5*(-parseInt(n(475))/6)+-parseInt(n(483))/7+parseInt(n(489))/8)break;e.push(e.shift())}catch(t){e.push(e.shift())}})(),AOS.init({duration:800,easing:"ease-in-out",once:!0});const mobileMenuButton=document[_0x4164c2(478)](_0x4164c2(469)),mobileMenu=document[_0x4164c2(478)](_0x4164c2(464));mobileMenuButton[_0x4164c2(481)]("click",(()=>{const t=_0x4164c2;mobileMenu[t(488)][t(467)](t(494))}));const backToTopButton=document[_0x4164c2(478)](_0x4164c2(495));window[_0x4164c2(481)]("scroll",(()=>{const t=_0x4164c2;window[t(497)]>300?(backToTopButton.classList[t(471)](t(499),"invisible"),backToTopButton[t(488)][t(477)](t(500),t(480))):(backToTopButton[t(488)][t(471)](t(500),t(480)),backToTopButton[t(488)][t(477)](t(499),t(468)))})),backToTopButton[_0x4164c2(481)](_0x4164c2(493),(()=>{const t=_0x4164c2;window[t(486)]({top:0,behavior:t(492)})}));const contactForm=document[_0x4164c2(478)](_0x4164c2(476));function _0x1341(t,o){const n=_0x5b56();return(_0x1341=function(t,o){return n[t-=463]})(t,o)}function _0x5b56(){const t=["opacity-0","opacity-100","getFullYear","reset","mobile-menu","year","href","toggle","invisible","mobile-menu-button","querySelectorAll","remove","3235EhRzFE","363128jWNPsF","offsetTop","6234sHFGdD","contactForm","add","getElementById","484972FQYjdd","visible","addEventListener","forEach","2703554LSDRlu","843546MXrpVf",'a[href^="#"]',"scrollTo","12966NrtiKI","classList","977776pdXpqR","Merci pour votre message! Nous vous contacterons bientôt.","contains","smooth","click","hidden","backToTop","querySelector","pageYOffset","submit"];return(_0x5b56=function(){return t})()}contactForm[_0x4164c2(481)](_0x4164c2(498),(t=>{const o=_0x4164c2;t.preventDefault(),alert(o(490)),contactForm[o(463)]()})),document[_0x4164c2(478)](_0x4164c2(465)).textContent=(new Date)[_0x4164c2(501)](),document[_0x4164c2(470)](_0x4164c2(485))[_0x4164c2(482)]((t=>{const o=_0x4164c2;t[o(481)](o(493),(function(t){const n=o;t.preventDefault();const e=this.getAttribute(n(466)),c=document[n(496)](e);c&&(window[n(486)]({top:c[n(474)]-80,behavior:n(492)}),!mobileMenu.classList[n(491)](n(494))&&mobileMenu[n(488)][n(477)](n(494)))}))}))</script>
+
 </body>
 </html>
