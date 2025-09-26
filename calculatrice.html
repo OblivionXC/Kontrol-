@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Messagerie</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f0f0;
+    }
+    #chat {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin: 5px 0;
+    }
+    #form {
+      display: flex;
+    }
+    #messageInput {
+      flex: 1;
+      padding: 10px;
+    }
+    #sendBtn {
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mini Messagerie</h1>
+  <div id="chat"></div>
+
+  <form id="form">
+    <input type="text" id="messageInput" placeholder="Tape ton message..." required />
+    <button type="submit" id="sendBtn">Envoyer</button>
+  </form>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("form");
+    const input = document.getElementById("messageInput");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const message = input.value.trim();
+      if (message === "") return;
+
+      const messageElem = document.createElement("div");
+      messageElem.className = "message";
+      messageElem.textContent = "👤 Toi : " + message;
+      chat.appendChild(messageElem);
+
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+    });
+  </script>
+
+</body>
+</html>

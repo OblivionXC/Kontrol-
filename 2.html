@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call of Duty: Web Ops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Barlow Condensed', sans-serif;
+            background-color: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff5e00, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .weapon-card {
+            transition: all 0.3s ease;
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid rgba(255, 100, 0, 0.2);
+        }
+        
+        .weapon-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 100, 0, 0.8);
+            box-shadow: 0 10px 20px rgba(255, 60, 0, 0.3);
+        }
+        
+        .map-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .map-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #ff5e00, #ff0000);
+            width: 65%;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff5e00, #ff0000);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .modal {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-black bg-opacity-90 border-b border-gray-800 fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-r from-orange-600 to-red-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-crosshairs text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold gradient-text">WEB OPS</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="nav-link text-white hover:text-orange-400">HOME</a>
+                <a href="#" class="nav-link text-white hover:text-orange-400">MULTIPLAYER</a>
+                <a href="#" class="nav-link text-white hover:text-orange-400">CAMPAIGN</a>
+                <a href="#" class="nav-link text-white hover:text-orange-400">ZOMBIES</a>
+                <a href="#" class="nav-link text-white hover:text-orange-400">STORE</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button class="bg-gradient-to-r from-orange-600 to-red-600 px-4 py-2 rounded-md font-bold hover:opacity-90 transition">
+                    PLAY NOW
+                </button>
+                <button id="menu-toggle" class="md:hidden text-white">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black bg-opacity-95 absolute w-full left-0 px-4 py-3">
+            <div class="flex flex-col space-y-3">
+                <a href="#" class="text-white hover:text-orange-400 py-2">HOME</a>
+                <a href="#" class="text-white hover:text-orange-400 py-2">MULTIPLAYER</a>
+                <a href="#" class="text-white hover:text-orange-400 py-2">CAMPAIGN</a>
+                <a href="#" class="text-white hover:text-orange-400 py-2">ZOMBIES</a>
+                <a href="#" class="text-white hover:text-orange-400 py-2">STORE</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-16 md:pt-32 md:pb-24">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1543092588-d6e1c6f9c8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-30"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-2xl">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-orange-600 to-red-600 px-3 py-1 rounded-md text-sm font-bold">NEW SEASON</span>
+                    <span class="ml-3 text-orange-400">SEASON 5 NOW LIVE</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">WELCOME TO <span class="gradient-text">WARZONE</span></h1>
+                <p class="text-gray-300 text-lg mb-8">Drop into the ultimate battle royale experience with new maps, weapons, and operators. The fight for dominance begins now.</p>
+                
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <button class="bg-gradient-to-r from-orange-600 to-red-600 px-6 py-3 rounded-md font-bold hover:opacity-90 transition pulse-animation">
+                        PLAY FREE NOW
+                    </button>
+                    <button class="bg-transparent border-2 border-orange-600 text-white px-6 py-3 rounded-md font-bold hover:bg-orange-600 hover:bg-opacity-20 transition">
+                        WATCH TRAILER
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Content -->
+    <section class="py-16 bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold">FEATURED <span class="gradient-text">CONTENT</span></h2>
+                <a href="#" class="text-orange-400 hover:text-orange-300 flex items-center">
+                    VIEW ALL <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Featured Item 1 -->
+                <div class="relative map-card rounded-lg overflow-hidden h-80">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="New Map" class="w-full h-full object-cover">
+                    <div class="map-overlay">
+                        <span class="bg-orange-600 text-xs px-2 py-1 rounded">NEW</span>
+                        <h3 class="text-xl font-bold mt-2">AL MAZRAH</h3>
+                        <p class="text-gray-300 text-sm">Explore the vast new battlefield with urban and rural combat zones.</p>
+                    </div>
+                </div>
+                
+                <!-- Featured Item 2 -->
+                <div class="relative map-card rounded-lg overflow-hidden h-80">
+                    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="New Operator" class="w-full h-full object-cover">
+                    <div class="map-overlay">
+                        <span class="bg-red-600 text-xs px-2 py-1 rounded">OPERATOR</span>
+                        <h3 class="text-xl font-bold mt-2">GHOST</h3>
+                        <p class="text-gray-300 text-sm">The legendary operator returns with new skins and abilities.</p>
+                    </div>
+                </div>
+                
+                <!-- Featured Item 3 -->
+                <div class="relative map-card rounded-lg overflow-hidden h-80">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="New Weapon" class="w-full h-full object-cover">
+                    <div class="map-overlay">
+                        <span class="bg-yellow-600 text-xs px-2 py-1 rounded">WEAPON</span>
+                        <h3 class="text-xl font-bold mt-2">BAS-P SMG</h3>
+                        <p class="text-gray-300 text-sm">High mobility SMG with exceptional close-range performance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weapons Section -->
+    <section class="py-16 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-10">ARMORY <span class="gradient-text">SHOWCASE</span></h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Weapon 1 -->
+                <div class="weapon-card rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-gray-400">ASSAULT RIFLE</span>
+                            <h3 class="text-xl font-bold">M4A1</h3>
+                        </div>
+                        <span class="bg-gray-800 text-orange-400 text-xs px-2 py-1 rounded">META</span>
+                    </div>
+                    <img src="https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/mw3/armory/weapons/m4a1.png" alt="M4A1" class="w-full h-32 object-contain mb-4">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Damage</span>
+                        <span class="text-orange-400">70</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Accuracy</span>
+                        <span class="text-orange-400">85</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-4">
+                        <span>Mobility</span>
+                        <span class="text-orange-400">60</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                </div>
+                
+                <!-- Weapon 2 -->
+                <div class="weapon-card rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-gray-400">SNIPER RIFLE</span>
+                            <h3 class="text-xl font-bold">AX-50</h3>
+                        </div>
+                        <span class="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded">NEW</span>
+                    </div>
+                    <img src="https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/mw3/armory/weapons/ax50.png" alt="AX-50" class="w-full h-32 object-contain mb-4">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Damage</span>
+                        <span class="text-orange-400">95</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 95%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Accuracy</span>
+                        <span class="text-orange-400">90</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-4">
+                        <span>Mobility</span>
+                        <span class="text-orange-400">30</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                </div>
+                
+                <!-- Weapon 3 -->
+                <div class="weapon-card rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-gray-400">SMG</span>
+                            <h3 class="text-xl font-bold">MP5</h3>
+                        </div>
+                        <span class="bg-gray-800 text-green-400 text-xs px-2 py-1 rounded">POPULAR</span>
+                    </div>
+                    <img src="https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/mw3/armory/weapons/mp5.png" alt="MP5" class="w-full h-32 object-contain mb-4">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Damage</span>
+                        <span class="text-orange-400">55</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 55%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Accuracy</span>
+                        <span class="text-orange-400">65</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-4">
+                        <span>Mobility</span>
+                        <span class="text-orange-400">85</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                </div>
+                
+                <!-- Weapon 4 -->
+                <div class="weapon-card rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-gray-400">LMG</span>
+                            <h3 class="text-xl font-bold">PKM</h3>
+                        </div>
+                        <span class="bg-gray-800 text-purple-400 text-xs px-2 py-1 rounded">POWERFUL</span>
+                    </div>
+                    <img src="https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/mw3/armory/weapons/pkm.png" alt="PKM" class="w-full h-32 object-contain mb-4">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Damage</span>
+                        <span class="text-orange-400">80</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 80%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>Accuracy</span>
+                        <span class="text-orange-400">75</span>
+                    </div>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-4">
+                        <span>Mobility</span>
+                        <span class="text-orange-400">40</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Battle Pass Section -->
+    <section class="py-16 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <span class="text-orange-400 mb-2 block">SEASON 5 BATTLE PASS</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">UNLOCK <span class="gradient-text">REWARDS</span></h2>
+                    <p class="text-gray-300 mb-6">Earn up to 1,300 COD Points and over 100 tiers of content including new Operators, Weapon Blueprints, Calling Cards, and more.</p>
+                    <button class="bg-gradient-to-r from-orange-600 to-red-600 px-6 py-3 rounded-md font-bold hover:opacity-90 transition">
+                        VIEW BATTLE PASS
+                    </button>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <img src="https://www.callofduty.com/content/dam/atvi/callofduty/cod-touchui/mw3/season05/battle-pass/season05-battlepass.jpg" alt="Battle Pass" class="rounded-lg shadow-xl border border-gray-700">
+                    <div class="absolute -bottom-4 -right-4 bg-gradient-to-r from-orange-600 to-red-600 px-4 py-2 rounded-md font-bold">
+                        <span class="text-sm">100 TIERS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Modes -->
+    <section class="py-16 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-10">GAME <span class="gradient-text">MODES</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Mode 1 -->
+                <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-orange-600 transition">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Warzone" class="w-full h-40 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">WARZONE</h3>
+                        <p class="text-gray-300 mb-4">Battle Royale with up to 150 players. Be the last squad standing.</p>
+                        <div class="flex items-center text-sm text-orange-400">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>150 PLAYERS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mode 2 -->
+                <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-orange-600 transition">
+                    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Multiplayer" class="w-full h-40 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">MULTIPLAYER</h3>
+                        <p class="text-gray-300 mb-4">Fast-paced combat across various game modes and maps.</p>
+                        <div class="flex items-center text-sm text-orange-400">
+                            <i class="fas fa-gamepad mr-2"></i>
+                            <span>12+ MODES</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mode 3 -->
+                <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-orange-600 transition">
+                    <img src="https://images.unsplash.com/photo-1543092588-d6e1c6f9c8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Zombies" class="w-full h-40 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">ZOMBIES</h3>
+                        <p class="text-gray-300 mb-4">Cooperative survival against waves of the undead.</p>
+                        <div class="flex items-center text-sm text-orange-400">
+                            <i class="fas fa-skull mr-2"></i>
+                            <span>4 PLAYER CO-OP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-gray-900 to-black">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-2">STAY IN THE <span class="gradient-text">FIGHT</span></h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for the latest updates, patch notes, and exclusive offers.</p>
+            
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:border-orange-500">
+                <button class="bg-gradient-to-r from-orange-600 to-red-600 px-6 py-3 rounded-r-md font-bold hover:opacity-90 transition">
+                    SUBSCRIBE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4 gradient-text">WEB OPS</h3>
+                    <p class="text-gray-400">The ultimate first-person shooter experience. Join the battle today.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white">GAME</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Multiplayer</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Warzone</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Campaign</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Zombies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white">SUPPORT</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Patch Notes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-orange-400">Status</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white">SOCIAL</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 text-xl"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 text-xl"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 WEB OPS. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-orange-400 text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-orange-400 text-sm">Cookie Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div class="bg-gray-900 rounded-lg max-w-md w-full p-8 relative border border-gray-700">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <h2 class="text-2xl font-bold mb-6 gradient-text text-center">OPERATOR LOGIN</h2>
+            
+            <form>
+                <div class="mb-4">
+                    <label class="block text-gray-400 mb-2">CALLSIGN</label>
+                    <input type="text" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-orange-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-400 mb-2">PASSWORD</label>
+                    <input type="password" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-orange-500">
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-orange-600 to-red-600 px-6 py-3 rounded-md font-bold hover:opacity-90 transition mb-4">
+                    DEPLOY
+                </button>
+                
+                <div class="text-center text-sm text-gray-400">
+                    <a href="#" class="hover:text-orange-400">Forgot password?</a>
+                    <span class="mx-2">|</span>
+                    <a href="#" class="hover:text-orange-400">Create account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Modal functionality
+        document.querySelectorAll('[data-modal-toggle]').forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                modal.classList.add('active');
+            });
+        });
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('login-modal').classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('login-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        // Simulate play now button opening login modal
+        document.querySelectorAll('button:contains("PLAY NOW")').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('login-modal').classList.add('active');
+            });
+        });
+
+        // Weapon stats animation on hover
+        document.querySelectorAll('.weapon-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const progressBars = this.querySelectorAll('.progress-fill');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 50);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

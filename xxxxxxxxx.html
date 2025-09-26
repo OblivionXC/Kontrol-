@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bouton K dynamique</title>
+  <style>
+    :root{
+      --size: 96px; /* taille du bouton */
+      --accent-1: #f90707; /* rouge */
+      --accent-2: #ffffff; /* blanc */
+      --accent-3: #f50f0f; /* noir */
+    }
+
+    *{box-sizing:border-box}
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#000000;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial}
+
+    .k-btn{
+      width:var(--size);
+      height:var(--size);
+      display:inline-grid;
+      place-items:center;
+      border-radius:22px;
+      background:linear-gradient(135deg, rgba(6, 5, 5, 0.08), rgba(0,0,0,0.08));
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      cursor:pointer;
+      transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+      position:relative;
+      overflow:visible;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .k-btn:focus{outline:none}
+
+    .k-btn:active{transform:translateY(2px) scale(.995)}
+
+    .k-icon{width:66%;height:66%;display:block;filter:drop-shadow(0 6px 18px rgba(12, 10, 10, 0.55));}
+
+    .k-shape{
+      transform-origin:center center;
+      transition:transform .5s cubic-bezier(.2,.9,.2,1), filter .3s;
+    }
+
+    .k-btn:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+    .k-btn:hover .k-shape{transform:rotate(-6deg) scale(1.03)}
+
+    .gradient-anim{
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      stroke-width:10;
+      stroke: url(#g1);
+      transition:stroke-dashoffset .8s ease, filter .3s;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 0;
+      filter: drop-shadow(0 6px 10px rgba(255,0,0,0.5));
+    }
+
+    .ripple{
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+      transform:scale(0);
+      opacity:.35;
+      background:radial-gradient(circle at center, rgba(255,255,255,0.3), rgba(6, 6, 6, 0.1));
+    }
+
+    .label{
+      position:absolute;
+      bottom:-28px;
+      left:50%;
+      transform:translateX(-50%);
+      color:#ffffff;font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(7, 7, 7, 0.6);backdrop-filter:blur(4px);box-shadow:0 6px 20px rgba(0,0,0,0.6)
+    }
+
+    @media (max-width:420px){:root{--size:72px}}
+  </style>
+</head>
+<body>
+
+  <button class="k-btn" id="kBtn" aria-label="Ouvrir le site" data-url="https://example.com">
+    <svg class="k-icon" viewBox="0 0 100 100" role="img" aria-hidden="true">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--accent-1)"/>
+          <stop offset="50%" stop-color="var(--accent-2)"/>
+          <stop offset="100%" stop-color="var(--accent-3)"/>
+          <animate attributeName="x1" values="0%;100%;0%" dur="4s" repeatCount="indefinite" />
+        </linearGradient>
+      </defs>
+
+      <circle cx="50" cy="50" r="46" fill="transparent" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" />
+
+      <path class="k-shape gradient-anim" d="M36 20 L36 80" />
+      <path class="k-shape gradient-anim" d="M36 45 L70 22" />
+      <path class="k-shape gradient-anim" d="M36 55 L72 78" />
+    </svg>
+
+    <span class="label">Entrer</span>
+  </button>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('kBtn');
+      btn.addEventListener('click', (e)=>{
+        const url = btn.dataset.url;
+        if(!url) return;
+
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
+        const size = Math.max(rect.width, rect.height) * 1.6;
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+        btn.appendChild(ripple);
+        requestAnimationFrame(()=>{
+          ripple.style.transform = 'scale(1)';
+          ripple.style.transition = 'transform 520ms cubic-bezier(.2,.9,.2,1), opacity 520ms';
+          ripple.style.opacity = '0';
+        });
+        setTimeout(()=>ripple.remove(),600);
+
+        window.open(url, '_blank', 'noopener');
+      });
+
+      btn.addEventListener('keydown', (ev)=>{
+        if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btn.click(); }
+      });
+    })();
+  </script>
+</body>
+</html>

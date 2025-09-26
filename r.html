@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>K'Ontrol — Location de meubles & vaisselle haut de gamme</title>
+<meta name="description" content="K'Ontrol - Location de mobilier et vaisselle haut de gamme pour vos événements à Abidjan. Contact, galerie, localisation, avis et plus." />
+<meta name="author" content="K'Ontrol" />
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --accent: #c40000;
+    --accent-soft: #ff6666;
+    --title-font: 'Great Vibes', cursive;
+  }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #fafafa;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    opacity: 0.05;
+    z-index: -1;
+  }
+  .title-font {
+    font-family: var(--title-font);
+  }
+  /* Scrollbar for reviews */
+  #reviewsList::-webkit-scrollbar {
+    width: 8px;
+  }
+  #reviewsList::-webkit-scrollbar-thumb {
+    background-color: var(--accent-soft);
+    border-radius: 4px;
+  }
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 3px solid rgba(196,0,0,0.4);
+    outline-offset: 3px;
+  }
+  /* Zoom transition */
+  #zoomImage {
+    transition: transform 0.3s ease;
+    will-change: transform;
+  }
+  /* Animate fadeInUp */
+  .fadeInUp {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .fadeInUp.visible {
+    opacity: 1;
+    transform: none;
+  }
+  /* Partner logos animation */
+  .partner-logo {
+    filter: grayscale(70%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+  .partner-logo:hover {
+    filter: grayscale(0%);
+    transform: scale(1.1);
+  }
+  /* Button gradient hover */
+  .btn-gradient {
+    background: linear-gradient(45deg, var(--accent), var(--accent-soft));
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(45deg, var(--accent-soft), var(--accent));
+  }
+</style>
+</head>
+<body class="text-gray-900 antialiased selection:bg-[var(--accent-soft)] selection:text-white">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-red-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#accueil" aria-label="Accueil K'Ontrol" class="flex items-center gap-3">
+      <h1 class="text-4xl title-font font-bold text-[var(--accent)] select-none">K'<span class="text-black">Ontrol</span></h1>
+      <span class="hidden md:inline text-sm font-semibold text-gray-600">Location de meubles & vaisselle</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-8 font-semibold uppercase text-[var(--accent)] tracking-wide">
+      <a href="#accueil" class="hover:text-[var(--accent-soft)] transition">Accueil</a>
+      <a href="#about" class="hover:text-[var(--accent-soft)] transition">À propos</a>
+      <a href="#services" class="hover:text-[var(--accent-soft)] transition">Services</a>
+      <a href="#galerie" class="hover:text-[var(--accent-soft)] transition">Galerie</a>
+      <a href="#notation" class="hover:text-[var(--accent-soft)] transition">Avis</a>
+      <a href="#faq" class="hover:text-[var(--accent-soft)] transition">FAQ</a>
+      <a href="#localisation" class="hover:text-[var(--accent-soft)] transition">Localisation</a>
+      <a href="#contact" class="hover:text-[var(--accent-soft)] transition">Contact</a>
+    </nav>
+
+    <!-- Contact & Action Buttons -->
+    <div class="hidden md:flex items-center gap-4">
+      <a href="mailto:contact@kontrol.ci" class="px-5 py-2 rounded-md bg-[var(--accent)] text-white font-semibold hover:bg-[var(--accent-soft)] transition">contact@kontrol.ci</a>
+      <a href="#contact" class="px-5 py-2 rounded-md border border-[var(--accent)] text-[var(--accent)] font-semibold hover:bg-[var(--accent-soft)] hover:text-white transition">Réserver</a>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button id="mobileMenuBtn" aria-label="Menu" aria-expanded="false" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav id="mobileMenu" class="hidden bg-white border-t border-red-100">
+    <ul class="flex flex-col space-y-2 py-4 px-6 font-semibold uppercase text-[var(--accent)] tracking-wide">
+      <li><a href="#accueil" class="block py-2 hover:text-[var(--accent-soft)]">Accueil</a></li>
+      <li><a href="#about" class="block py-2 hover:text-[var(--accent-soft)]">À propos</a></li>
+      <li><a href="#services" class="block py-2 hover:text-[var(--accent-soft)]">Services</a></li>
+      <li><a href="#galerie" class="block py-2 hover:text-[var(--accent-soft)]">Galerie</a></li>
+      <li><a href="#notation" class="block py-2 hover:text-[var(--accent-soft)]">Avis</a></li>
+      <li><a href="#faq" class="block py-2 hover:text-[var(--accent-soft)]">FAQ</a></li>
+      <li><a href="#localisation" class="block py-2 hover:text-[var(--accent-soft)]">Localisation</a></li>
+      <li><a href="#contact" class="block py-2 hover:text-[var(--accent-soft)]">Contact</a></li>
+    </ul>
+    <div class="px-6 pb-6 flex flex-col space-y-3">
+      <a href="mailto:contact@kontrol.ci" class="px-4 py-2 bg-[var(--accent)] text-white rounded-md text-center font-semibold hover:bg-[var(--accent-soft)] transition">contact@kontrol.ci</a>
+      <a href="#contact" class="px-4 py-2 border border-[var(--accent)] rounded-md text-[var(--accent)] text-center font-semibold hover:bg-[var(--accent-soft)] hover:text-white transition">Réserver</a>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="max-w-7xl mx-auto px-6 py-10">
+
+  <!-- HERO -->
+  <section id="accueil" class="relative rounded-xl overflow-hidden mb-16 shadow-lg bg-gradient-to-b from-white/80 via-white/60 to-white/80">
+    <div class="relative h-96 md:h-[600px] overflow-hidden rounded-xl shadow-inner">
+      <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=format&fit=crop&w=1600&q=80" alt="Évènement élégant" class="w-full h-full object-cover object-center brightness-75 transition-transform duration-700 hover:scale-105" />
+      <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6 md:px-20">
+        <h2 class="title-font font-extrabold text-5xl md:text-7xl drop-shadow-lg animate-fadeInDown mb-3">Élevez vos événements avec style</h2>
+        <p class="max-w-3xl text-lg md:text-2xl drop-shadow-md mb-8 animate-fadeInUp">Mobilier, vaisselle et services haut de gamme pour mariages, séminaires, soirées et plus.</p>
+        <div class="flex gap-6 justify-center animate-fadeInUp delay-300">
+          <a href="#galerie" class="btn-gradient px-8 py-3 rounded-lg text-white font-semibold shadow-lg hover:shadow-xl transition">Voir la galerie</a>
+          <a href="#contact" class="px-8 py-3 rounded-lg border-2 border-white text-white font-semibold hover:bg-white hover:text-[var(--accent)] transition">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="bg-white rounded-xl p-8 shadow-md mb-14 fadeInUp">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-6 text-center">À propos de K'Ontrol</h2>
+    <div class="max-w-4xl mx-auto text-gray-700 text-lg leading-relaxed">
+      <p>K'Ontrol est votre partenaire privilégié pour la location de mobilier et vaisselle haut de gamme. Nous fournissons une large gamme de chaises, tables, salons, buffets, assiettes, verres et couverts, avec un service complet incluant livraison, montage et démontage. Notre mission est d'accompagner chaque événement — mariage, séminaire, gala, ou fête privée — avec élégance et professionnalisme.</p>
+      <p class="mt-4">Basés à Abidjan, nous mettons à votre disposition une équipe qualifiée et attentive aux détails, pour que chaque instant soit mémorable.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="mb-16">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-10 text-center">Nos Services</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <article class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition cursor-pointer fadeInUp" tabindex="0" aria-labelledby="service1-title">
+        <h3 id="service1-title" class="text-xl font-semibold mb-3 text-[var(--accent)]">Mobilier</h3>
+        <p>Découvrez notre large sélection de mobilier : chaises design, tables élégantes, salons confortables, buffets modernes. Adaptés à tous types d’événements, nos équipements allient style et confort.</p>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+          <li>Chaises et fauteuils</li>
+          <li>Tables rondes et rectangulaires</li>
+          <li>Salons lounge</li>
+          <li>Buffets et mange-debout</li>
+        </ul>
+      </article>
+      <article class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition cursor-pointer fadeInUp delay-100" tabindex="0" aria-labelledby="service2-title">
+        <h3 id="service2-title" class="text-xl font-semibold mb-3 text-[var(--accent)]">Vaisselle & Service</h3>
+        <p>Nous proposons une vaisselle raffinée, comprenant assiettes, verres, couverts et plats de service. Sur demande, notre équipe expérimentée assure un service impeccable lors de votre événement.</p>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+          <li>Assiettes et bols variés</li>
+          <li>Verres à vin, eau et champagne</li>
+          <li>Couverts élégants</li>
+          <li>Service en salle disponible</li>
+        </ul>
+      </article>
+      <article class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition cursor-pointer fadeInUp delay-200" tabindex="0" aria-labelledby="service3-title">
+        <h3 id="service3-title" class="text-xl font-semibold mb-3 text-[var(--accent)]">Organisation & Logistique</h3>
+        <p>En plus de la location, nous aidons à organiser votre événement : planification, coordination, et logistique. Bénéficiez d’un accompagnement complet pour un événement sans stress.</p>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+          <li>Conseil et planification</li>
+          <li>Coordination jour J</li>
+          <li>Gestion des fournisseurs</li>
+          <li>Installation et démontage</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section id="galerie" class="mb-16 max-w-7xl mx-auto">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-8 text-center">Galerie de nos articles</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-5">
+      <!-- Images with zoom cursor and accessible tabindex -->
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Chaise design, voir en grand">
+        <img src="https://images.unsplash.com/photo-1582582494700-4b2c1d0b0eac?auto=format&fit=crop&w=1200&q=80" alt="Chaise design" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Table ronde, voir en grand">
+        <img src="https://images.unsplash.com/photo-1582582494644-5f918ed9d3f5?auto=format&fit=crop&w=1200&q=80" alt="Table ronde" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Service de vaisselle, voir en grand">
+        <img src="https://images.unsplash.com/photo-1621417693363-6e2c89e64ae4?auto=format&fit=crop&w=1200&q=80" alt="Service de vaisselle" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Buffet moderne, voir en grand">
+        <img src="https://images.unsplash.com/photo-1616627560942-02bfb4aa4d02?auto=format&fit=crop&w=1200&q=80" alt="Buffet moderne" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Salon lounge, voir en grand">
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80" alt="Salon lounge" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Verres cristal, voir en grand">
+        <img src="https://images.unsplash.com/photo-1590080876316-6c4f046b3f7c?auto=format&fit=crop&w=1200&q=80" alt="Verres cristal" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <!-- Repeat with more images for a big gallery -->
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Éclairage festif, voir en grand">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80" alt="Éclairage festif" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Décoration de table, voir en grand">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Décoration de table" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+      <div class="relative overflow-hidden rounded-lg shadow-lg border-2 border-[var(--accent-soft)] cursor-zoom-in gallery-card" tabindex="0" aria-label="Plats de service, voir en grand">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80" alt="Plats de service" class="w-full h-40 object-cover transition-transform duration-300 hover:scale-110" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- Zoom Modal -->
+    <div id="zoomModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-6 z-50 hidden" aria-modal="true" role="dialog" aria-labelledby="zoomModalTitle" aria-describedby="zoomModalDesc">
+      <div class="relative max-w-4xl max-h-[90vh]">
+        <button id="zoomCloseBtn" aria-label="Fermer la vue agrandie" class="absolute top-3 right-3 text-white text-3xl font-bold hover:text-[var(--accent-soft)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] rounded">×</button>
+        <img id="zoomImage" src="" alt="" class="rounded-lg shadow-2xl max-w-full max-h-[85vh]" />
+        <p id="zoomModalDesc" class="text-white mt-3 text-center max-w-xl mx-auto"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTATION & AVIS -->
+  <section id="notation" class="bg-white rounded-xl shadow-md p-8 max-w-5xl mx-auto mb-20 fadeInUp">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-6 text-center">Ce que nos clients disent</h2>
+
+    <div class="flex flex-col md:flex-row gap-8 md:gap-12">
+      <!-- Star Rating Summary -->
+      <div class="flex flex-col items-center justify-center w-full md:w-1/3 border-r border-gray-200 pr-8">
+        <div class="text-6xl font-extrabold text-[var(--accent)] select-none" aria-label="Note moyenne 4.7 sur 5">4.7<span class="text-xl font-normal">/5</span></div>
+        <div class="mt-2 flex space-x-1" aria-hidden="true">
+          <svg class="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z" /></svg>
+          <svg class="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z" /></svg>
+          <svg class="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z" /></svg>
+          <svg class="w-8 h-8 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z" /></svg>
+          <svg class="w-8 h-8 text-gray-300 fill-current" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z" /></svg>
+        </div>
+        <div class="mt-6 w-full">
+          <div class="mb-2 text-sm font-semibold">5 étoiles</div>
+          <progress value="80" max="100" class="w-full h-4 rounded bg-gray-200 accent-[var(--accent)]" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">80%</progress>
+        </div>
+        <div class="mb-2 text-sm font-semibold mt-4">4 étoiles</div>
+        <progress value="15" max="100" class="w-full h-4 rounded bg-gray-200 accent-[var(--accent-soft)]" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15">15%</progress>
+        <div class="mb-2 text-sm font-semibold mt-4">3 étoiles</div>
+        <progress value="3" max="100" class="w-full h-4 rounded bg-gray-200 accent-gray-400" aria-valuemin="0" aria-valuemax="100" aria-valuenow="3">3%</progress>
+        <div class="mb-2 text-sm font-semibold mt-4">2 étoiles</div>
+        <progress value="1" max="100" class="w-full h-4 rounded bg-gray-200 accent-gray-400" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1">1%</progress>
+        <div class="mb-2 text-sm font-semibold mt-4">1 étoile</div>
+        <progress value="1" max="100" class="w-full h-4 rounded bg-gray-200 accent-gray-400" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1">1%</progress>
+      </div>
+
+      <!-- Reviews list -->
+      <ul id="reviewsList" class="w-full md:w-2/3 max-h-[400px] overflow-y-auto space-y-6" role="list" aria-label="Liste des avis clients">
+        <!-- Review 1 -->
+        <li class="bg-gray-50 p-5 rounded-xl shadow-sm">
+          <div class="flex items-center space-x-3 mb-2">
+            <div class="w-12 h-12 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-bold text-lg select-none">A</div>
+            <div>
+              <p class="font-semibold text-[var(--accent)]">Adama D.</p>
+              <div class="flex text-yellow-400" aria-label="Note : 5 étoiles">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p>Service impeccable, mobilier de qualité et une équipe très professionnelle. Notre mariage était parfait grâce à K'Ontrol.</p>
+        </li>
+        <!-- Review 2 -->
+        <li class="bg-gray-50 p-5 rounded-xl shadow-sm">
+          <div class="flex items-center space-x-3 mb-2">
+            <div class="w-12 h-12 rounded-full bg-[var(--accent-soft)] text-white flex items-center justify-center font-bold text-lg select-none">M</div>
+            <div>
+              <p class="font-semibold text-[var(--accent)]">Marie K.</p>
+              <div class="flex text-yellow-400" aria-label="Note : 4 étoiles">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current text-gray-300" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p>Très bonne expérience avec K'Ontrol, leurs produits sont impeccables, mais un petit retard dans la livraison à noter.</p>
+        </li>
+        <!-- Review 3 -->
+        <li class="bg-gray-50 p-5 rounded-xl shadow-sm">
+          <div class="flex items-center space-x-3 mb-2">
+            <div class="w-12 h-12 rounded-full bg-[var(--accent-soft)] text-white flex items-center justify-center font-bold text-lg select-none">B</div>
+            <div>
+              <p class="font-semibold text-[var(--accent)]">Brice T.</p>
+              <div class="flex text-yellow-400" aria-label="Note : 5 étoiles">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.377 2.455a1 1 0 00-.364 1.118l1.287 3.97c.3.922-.755 1.688-1.54 1.118l-3.377-2.455a1 1 0 00-1.175 0l-3.377 2.455c-.784.57-1.838-.196-1.54-1.118l1.287-3.97a1 1 0 00-.364-1.118L2.045 9.398c-.783-.57-.38-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.97z"/></svg>
+              </div>
+            </div>
+          </div>
+          <p>Excellente expérience. Le mobilier est très beau, et la livraison s’est déroulée sans problème. Je recommande chaudement !</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="mb-20 max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-md fadeInUp">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-8 text-center">Questions fréquentes</h2>
+    <dl class="space-y-6">
+      <div>
+        <dt class="font-semibold text-lg cursor-pointer faq-question" tabindex="0" aria-expanded="false" aria-controls="faq1" id="faq1-label">
+          Quels types de mobilier proposez-vous ?
+        </dt>
+        <dd id="faq1" class="mt-2 pl-4 text-gray-700 hidden" aria-labelledby="faq1-label">
+          Nous proposons chaises, tables, salons lounge, buffets et mange-debout, tous en styles modernes et classiques adaptés à vos besoins événementiels.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-semibold text-lg cursor-pointer faq-question" tabindex="0" aria-expanded="false" aria-controls="faq2" id="faq2-label">
+          Offrez-vous un service de montage et démontage ?
+        </dt>
+        <dd id="faq2" class="mt-2 pl-4 text-gray-700 hidden" aria-labelledby="faq2-label">
+          Oui, notre équipe s’occupe de la livraison, du montage avant l’événement, et du démontage après pour vous assurer tranquillité d’esprit.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-semibold text-lg cursor-pointer faq-question" tabindex="0" aria-expanded="false" aria-controls="faq3" id="faq3-label">
+          Comment puis-je faire une réservation ?
+        </dt>
+        <dd id="faq3" class="mt-2 pl-4 text-gray-700 hidden" aria-labelledby="faq3-label">
+          Vous pouvez nous contacter par email, téléphone, ou via le formulaire de contact ci-dessous pour un devis personnalisé.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-semibold text-lg cursor-pointer faq-question" tabindex="0" aria-expanded="false" aria-controls="faq4" id="faq4-label">
+          Est-ce que vous livrez en dehors d’Abidjan ?
+        </dt>
+        <dd id="faq4" class="mt-2 pl-4 text-gray-700 hidden" aria-labelledby="faq4-label">
+          Principalement à Abidjan et environs, mais contactez-nous pour discuter de vos besoins spécifiques.
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- LOCALISATION -->
+  <section id="localisation" class="mb-20 max-w-7xl mx-auto bg-white p-8 rounded-xl shadow-md fadeInUp">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-6 text-center">Où nous trouver ?</h2>
+    <p class="text-center mb-6 text-gray-700 max-w-3xl mx-auto">Notre siège est situé au cœur d'Abidjan, dans le quartier des Rosiers, Programme Rivera, Villa 12.</p>
+
+    <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.8678496779227!2d-4.031115985942592!3d5.322153995731098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfb9899a45a6c661%3A0x50e9ed7c0c0c5ce4!2sProgramme%20Rivera%2C%20Abidjan!5e0!3m2!1sfr!2sci!4v1691653059218!5m2!1sfr!2sci"
+        width="100%"
+        height="450"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Carte de localisation K'Ontrol à Abidjan"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <section id="partenaires" class="mb-20 max-w-7xl mx-auto">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-8 text-center">Nos partenaires</h2>
+    <div class="flex flex-wrap justify-center items-center gap-10">
+      <img src="https://dummyimage.com/150x70/ff6666/fff&text=Hotel+ABC" alt="Logo Hôtel ABC" class="partner-logo max-h-16" loading="lazy" />
+      <img src="https://dummyimage.com/150x70/c40000/fff&text=Restaurant+XYZ" alt="Logo Restaurant XYZ" class="partner-logo max-h-16" loading="lazy" />
+      <img src="https://dummyimage.com/150x70/800080/fff&text=Entreprise+123" alt="Logo Entreprise 123" class="partner-logo max-h-16" loading="lazy" />
+      <img src="https://dummyimage.com/150x70/228b22/fff&text=Salon+Elite" alt="Logo Salon Elite" class="partner-logo max-h-16" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="mb-20 max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-md fadeInUp">
+    <h2 class="title-font text-3xl font-bold text-[var(--accent)] mb-6 text-center">Contactez-nous</h2>
+    <form id="contactForm" class="max-w-xl mx-auto space-y-6" aria-label="Formulaire de contact">
+      <div>
+        <label for="name" class="block text-gray-700 font-semibold mb-2">Nom complet</label>
+        <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" />
+      </div>
+      <div>
+        <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+        <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" />
+      </div>
+      <div>
+        <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+        <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"></textarea>
+      </div>
+      <button type="submit" class="w-full bg-[var(--accent)] text-white font-bold py-3 rounded hover:bg-[var(--accent-soft)] transition-colors duration-300">Envoyer</button>
+    </form>
+  </section>
+
+  <script>
+    // Zoom modal logic
+    const zoomModal = document.getElementById('zoomModal');
+    const zoomImage = document.getElementById('zoomImage');
+    const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+    const galleryCards = document.querySelectorAll('.gallery-card');
+
+    galleryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        zoomImage.src = img.src;
+        zoomImage.alt = img.alt;
+        zoomModal.classList.remove('hidden');
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    zoomCloseBtn.addEventListener('click', () => {
+      zoomModal.classList.add('hidden');
+      zoomImage.src = '';
+      zoomImage.alt = '';
+    });
+
+    zoomModal.addEventListener('click', (e) => {
+      if (e.target === zoomModal) {
+        zoomModal.classList.add('hidden');
+        zoomImage.src = '';
+        zoomImage.alt = '';
+      }
+    });
+
+    // FAQ toggle
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const expanded = question.getAttribute('aria-expanded') === 'true';
+        question.setAttribute('aria-expanded', !expanded);
+        const answer = document.getElementById(question.getAttribute('aria-controls'));
+        if (answer) {
+          answer.classList.toggle('hidden');
+        }
+      });
+      question.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          question.click();
+        }
+      });
+    });
+
+    // Contact form submission (basic example)
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Merci pour votre message. Nous vous répondrons bientôt !');
+      contactForm.reset();
+    });
+  </script>
+</body>
+</html>

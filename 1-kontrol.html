@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>K'Ontrol — Location de meubles & vaisselle</title>
+
+  <!-- Tailwind CDN for quick prototype -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <meta name="description" content="K'Ontrol - Location de mobilier et vaisselle pour événements. Galerie, localisation Waze, contact, notation et avis." />
+
+  <style>
+    :root {
+      --accent: #c40000;
+      --accent-soft: #ff6666;
+      --title-font: 'Great Vibes', cursive;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      opacity: .08;
+      z-index: -1;
+    }
+    .title-font { font-family:Arial(--title-font); }
+    /* subtle focus */
+    :focus { outline: 3px solid rgba(196,0,0,0.15); outline-offset: 2px; }
+    /* zoom overlay image smoothing */
+    #zoomImage { transition: transform .25s ease; will-change: transform; }
+    /* parallax hero overlay */
+    .hero-bg { transform: translateZ(0); will-change: transform; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b-2 border-[#f2dede]">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-4" aria-label="Accueil K'Ontrol">
+        <div class="text-4xl title-font text-black">K<span class="text-[var(--accent)]">'</span>Ontrol</div>
+        <div class="hidden sm:block text-sm text-gray-600 font-medium">Location de meubles & vaisselle pour événements</div>
+      </a>
+
+      <div class="hidden md:flex items-center gap-4">
+        <a href="mailto:contact@kontrol.ci" class="px-4 py-2 bg-[var(--accent)] text-white rounded-md font-semibold hover:bg-[var(--accent-soft)]">contact@kontrol.ci</a>
+        <a href="#contact" class="px-4 py-2 text-[var(--accent)] border border-[var(--accent)] rounded-md hover:bg-gray-50">Réserver</a>
+      </div>
+
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" aria-expanded="false" class="p-2 rounded-md focus:ring-2 focus:ring-[var(--accent)]">
+          <svg width="24" height="24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden border-t">
+      <nav class="px-6 py-4 flex flex-col gap-3">
+        <a href="#accueil" class="py-2">Accueil</a>
+        <a href="#services" class="py-2">Services</a>
+        <a href="#galerie" class="py-2">Galerie</a>
+        <a href="#notation" class="py-2">Notation</a>
+        <a href="#localisation" class="py-2">Localisation</a>
+        <a href="#infosEntreprise" class="py-2">Infos</a>
+        <a href="#contact" class="py-2">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- NAV (desktop) -->
+  <nav class="hidden md:block bg-white border-b">
+    <div class="max-w-6xl mx-auto px-6">
+      <ul class="flex gap-8 justify-center py-3 text-sm font-semibold text-[var(--accent)] uppercase">
+        <li><a href="#accueil" class="hover:text-[var(--accent-soft)]">Accueil</a></li>
+        <li><a href="#services" class="hover:text-[var(--accent-soft)]">Services</a></li>
+        <li><a href="#galerie" class="hover:text-[var(--accent-soft)]">Galerie</a></li>
+        <li><a href="#notation" class="hover:text-[var(--accent-soft)]">Notation</a></li>
+        <li><a href="#localisation" class="hover:text-[var(--accent-soft)]">Localisation</a></li>
+        <li><a href="#infosEntreprise" class="hover:text-[var(--accent-soft)]">Infos</a></li>
+        <li><a href="#contact" class="hover:text-[var(--accent-soft)]">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- HERO (parallax-ish) -->
+    <section id="accueil" class="relative rounded-xl overflow-hidden mb-10">
+      <div class="hero-bg relative h-64 md:h-96 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=format&fit=crop&w=1600&q=80" alt="Évènement" class="w-full h-full object-cover brightness-75" />
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+          <h1 class="text-4xl md:text-6xl title-font font-extrabold drop-shadow-lg">Élevez vos événements avec style</h1>
+          <p class="mt-4 text-lg md:text-xl max-w-3xl">Mobilier, vaisselle et service haut de gamme pour mariages, séminaires et soirées.</p>
+          <div class="mt-6 flex gap-4">
+            <a href="#galerie" class="px-6 py-3 bg-[var(--accent)] rounded-md font-semibold hover:bg-[var(--accent-soft)]">Voir la galerie</a>
+            <a href="#contact" class="px-6 py-3 bg-white/20 rounded-md border border-white font-semibold">Demander un devis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="bg-white rounded-xl p-6 md:p-8 mb-8 shadow-sm">
+      <h2 class="text-2xl md:text-3xl title-font text-black">À propos de K<span class="text-[var(--accent)]">'</span>Ontrol</h2>
+      <p class="mt-3 text-gray-700">K<span class="text-[var(--accent)]">'</span>Ontrol propose la location de mobilier et vaisselle haut de gamme, avec montage/démontage et livraison. Nous accompagnons chaque événement pour que tout soit parfait.</p>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="grid md:grid-cols-2 gap-6 mb-8">
+      <article class="bg-white p-6 rounded-xl shadow-sm">
+        <h3 class="font-bold text-lg">Mobilier</h3>
+        <p class="mt-2 text-gray-700">Chaises, tables, salons, buffets — équipements variés pour tous styles d'événement.</p>
+      </article>
+      <article class="bg-white p-6 rounded-xl shadow-sm">
+        <h3 class="font-bold text-lg">Vaisselle & Service</h3>
+        <p class="mt-2 text-gray-700">Assiettes, verres, couverts, plats de service. Service sur demande avec équipe qualifiée.</p>
+      </article>
+    </section>
+
+    <!-- GALLERY 3x6 -->
+    <section id="galerie" class="mb-10">
+      <h2 class="text-2xl md:text-3xl title-font text-black text-center mb-6">Nos articles</h2>
+
+      <div class="grid grid-cols-3 gap-6">
+        <!-- 18 images (replace by your images) -->
+        <!-- Each card: border decorated, shadow, image inside -->
+        <!-- Row 1 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1582582494700-4b2c1d0b0eac?auto=format&fit=crop&w=1200&q=80" alt="Chaise design" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1582582494644-5f918ed9d3f5?auto=format&fit=crop&w=1200&q=80" alt="Table ronde" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1621417693363-6e2c89e64ae4?auto=format&fit=crop&w=1200&q=80" alt="Service de vaisselle" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <!-- Row 2 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1616627560942-02bfb4aa4d02?auto=format&fit=crop&w=1200&q=80" alt="Buffet moderne" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80" alt="Salon lounge" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1590080876316-6c4f046b3f7c?auto=format&fit=crop&w=1200&q=80" alt="Verres cristal" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <!-- Row 3 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80" alt="Éclairage festif" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Décoration de table" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1505253210343-dba3578f542e?auto=format&fit=crop&w=1200&q=80" alt="Couverts élégants" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <!-- Row 4 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" alt="Table dressée" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1523978591478-c753949ff840?auto=format&fit=crop&w=1200&q=80" alt="Verres sur table" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1499988929866-93d1d81b6927?auto=format&fit=crop&w=1200&q=80" alt="Chaises blanches" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <!-- Row 5 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Lumières ambiance" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?auto=format&fit=crop&w=1200&q=80" alt="Plats de service" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51b2f5?auto=format&fit=crop&w=1200&q=80" alt="Buffet design" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <!-- Row 6 -->
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80" alt="Table élégante" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Salon confortable" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+        <div class="rounded-lg overflow-hidden border-2 border-[var(--accent-soft)] shadow-lg gallery-card">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Luxe et élégance" class="w-full h-44 md:h-56 object-cover cursor-zoom-in" tabindex="0" />
+        </div>
+      </div>
+    </section>
+
+    <!-- RATING & REVIEWS -->
+    <section id="notation" class="bg-white rounded-xl p-6 mb-8 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h3 class="text-xl title-font font-semibold">Notez notre entreprise</h3>
+          <p class="text-sm text-gray-600 mt-1">Votre avis compte — il aide les autres clients.</p>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <div id="starBar" class="flex text-3xl select-none" role="radiogroup" aria-label="Notation">
+            <button class="star-btn" data-value="1" aria-label="1 étoile">☆</button>
+            <button class="star-btn" data-value="2" aria-label="2 étoiles">☆</button>
+            <button class="star-btn" data-value="3" aria-label="3 étoiles">☆</button>
+            <button class="star-btn" data-value="4" aria-label="4 étoiles">☆</button>
+            <button class="star-btn" data-value="5" aria-label="5 étoiles">☆</button>
+          </div>
+          <div>
+            <div class="text-sm">Moyenne : <strong id="avgRating">0.0</strong> / 5</div>
+            <div class="text-xs text-gray-500" id="ratingCount">0 avis</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews list + submit -->
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-3">Avis clients</h4>
+          <ul id="reviewsList" class="space-y-3 max-h-64 overflow-auto p-3 border rounded-md bg-gray-50"></ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-3">Laisser un avis</h4>
+          <form id="reviewForm" class="space-y-3">
+            <input name="name" placeholder="Votre nom" class="w-full border px-3 py-2 rounded-md" required />
+            <textarea name="message" rows="4" placeholder="Votre avis..." class="w-full border px-3 py-2 rounded-md" required></textarea>
+            <div class="flex items-center gap-3">
+              <label class="text-sm">Votre note :</label>
+              <select name="rating" class="border px-3 py-2 rounded-md">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <button type="submit" class="bg-[var(--accent)] px-4 py-2 rounded-md text-white hover:bg-[var(--accent-soft)]">Envoyer</button>
+              <button type="button" id="clearReviews" class="text-sm text-red-600">Supprimer avis (dev)</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCALISATION -->
+    <section id="localisation" class="bg-white rounded-xl p-6 mb-8 shadow-sm">
+      <h3 class="text-xl title-font font-semibold">Localisation</h3>
+      <p class="mt-2 text-gray-700">Retrouvez-nous sur Waze ou Google Maps — ouvre l'application si disponible.</p>
+      <div class="mt-4 flex gap-4">
+        <a id="wazeLink" href="https://waze.com/ul?ll=6.8147,-5.2869&navigate=yes" target="_blank" rel="noopener" class="px-4 py-2 bg-[var(--accent)] text-white rounded-md hover:bg-[var(--accent-soft)]">Ouvrir dans Waze</a>
+        <a id="gmapsLink" href="https://www.google.com/maps?q=6.8147,-5.2869" target="_blank" rel="noopener" class="px-4 py-2 border rounded-md">Google Maps</a>
+      </div>
+    </section>
+
+    <!-- INFOS ENTREPRISE DYNAMIQUE -->
+    <section id="infosEntreprise" class="bg-white rounded-xl p-6 mb-10 shadow-sm">
+      <h3 class="text-xl title-font font-semibold">Informations</h3>
+      <div class="mt-3">
+        <button id="toggleInfosBtn" class="px-4 py-2 bg-[var(--accent)] text-white rounded-md hover:bg-[var(--accent-soft)]">Afficher les informations</button>
+      </div>
+      <div id="infosContent" class="mt-4 hidden text-gray-700">
+        <p><strong>Adresse :</strong> 123 Rue de l'Événement, Abidjan, Côte d'Ivoire</p>
+        <p><strong>Téléphone :</strong> <a href="tel:+2250123456789" class="text-[var(--accent)] underline">+225 01 23 45 67 89</a></p>
+        <p><strong>Email :</strong> <a href="mailto:contact@kontrol.ci" class="text-[var(--accent)] underline">contact@kontrol.ci</a></p>
+        <p><strong>Horaires :</strong> Lun - Ven : 08:00 - 18:00</p>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-3 bg-red-50 rounded-md">
+            <div class="text-sm text-red-700">Météo (mock)</div>
+            <div id="weatherMini" class="text-lg font-bold">☀ 28°C</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-md">
+            <div class="text-sm">Moyenne</div>
+            <div id="miniAvg" class="text-lg font-bold text-[var(--accent)]">0.0 / 5</div>
+            <div id="miniCount" class="text-xs text-gray-500">0 avis</div>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-md">
+            <div class="text-sm">Temps de réponse</div>
+            <div class="text-lg font-bold">~24h</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="bg-white rounded-xl p-6 mb-20 shadow-sm">
+      <h3 class="text-xl title-font font-semibold">Contactez-nous</h3>
+      <form id="contactForm" action="mailto:contact@kontrol.ci" method="post" enctype="text/plain" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input name="nom" placeholder="Nom complet" class="border px-3 py-2 rounded-md" required />
+        <input name="email" placeholder="Email" type="email" class="border px-3 py-2 rounded-md" required />
+        <input name="telephone" placeholder="Téléphone" class="border px-3 py-2 rounded-md" />
+        <select name="service" class="border px-3 py-2 rounded-md">
+          <option value="">Service souhaité</option>
+          <option>Mobilier</option>
+          <option>Vaisselle</option>
+          <option>Prestation complète</option>
+        </select>
+        <textarea name="message" rows="4" placeholder="Votre message..." class="col-span-1 md:col-span-2 border px-3 py-2 rounded-md"></textarea>
+        <div class="col-span-1 md:col-span-2 flex justify-between items-center">
+          <button class="bg-[var(--accent)] px-4 py-2 text-white rounded-md hover:bg-[var(--accent-soft)]">Envoyer</button>
+          <div class="text-sm text-gray-600">ou <a href="mailto:contact@kontrol.ci" class="text-[var(--accent)] underline">contact@kontrol.ci</a></div>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[var(--accent)] text-white py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <div class="text-lg font-semibold">K<span class="text-white">'</span>Ontrol</div>
+      <div class="mt-2">Contact : <a href="mailto:contact@kontrol.ci" class="underline">contact@kontrol.ci</a> — <a href="tel:+2250123456789" class="underline">+225 01 23 45 67 89</a></div>
+      <div class="mt-4 text-sm opacity-90">© <span id="copyYear"></span> K'Ontrol — Tous droits réservés</div>
+    </div>
+  </footer>
+
+  <!-- ZOOM OVERLAY -->
+  <div id="zoomOverlay" class="fixed inset-0 hidden z-50 bg-black/90 flex items-center justify-center p-6" role="dialog" aria-hidden="true">
+    <img id="zoomImage" src="" alt="Image agrandie" class="max-w-[95vw] max-h-[95vh] rounded-lg shadow-2xl" />
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Helper selectors
+    const $ = (s, ctx = document) => ctx.querySelector(s);
+    const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
+
+    // Footer year
+    $('#copyYear').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const mobileBtn = $('#mobileMenuBtn');
+    const mobileMenu = $('#mobileMenu');
+    mobileBtn?.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden');
+      mobileBtn.setAttribute('aria-expanded', String(!open));
+    });
+
+    // ====== Gallery zoom with history handling (back button) ======
+    (function(){
+      const imgs = $$('#galerie img');
+      const overlay = $('#zoomOverlay');
+      const zoomImg = $('#zoomImage');
+
+      function openZoom(src, alt) {
+        zoomImg.src = src;
+        zoomImg.alt = alt || '';
+        overlay.classList.remove('hidden');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        // push state for back button
+        history.pushState({k: 'zoom'}, '', '#zoom');
+      }
+
+      function closeZoom(fromPop = false){
+        overlay.classList.add('hidden');
+        overlay.setAttribute('aria-hidden', 'true');
+        zoomImg.src = '';
+        zoomImg.alt = '';
+        document.body.style.overflow = '';
+        if(!fromPop && history.state && history.state.k === 'zoom') {
+          history.back();
+        }
+      }
+
+      imgs.forEach(img => {
+        img.addEventListener('click', () => openZoom(img.src, img.alt));
+        img.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openZoom(img.src, img.alt); }
+        });
+      });
+
+      overlay.addEventListener('click', () => closeZoom(true));
+      document.addEventListener('keydown', e => {
+        if(e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeZoom(true);
+      });
+
+      window.addEventListener('popstate', (e) => {
+        // if overlay visible, close it on pop
+        if(overlay.getAttribute('aria-hidden') === 'false') {
+          closeZoom(true);
+        }
+      });
+    })();
+
+    // ====== Infos entreprise toggle & dynamic values ======
+    (function(){
+      const btn = $('#toggleInfosBtn');
+      const content = $('#infosContent');
+
+      btn.addEventListener('click', () => {
+        content.classList.toggle('hidden');
+        btn.textContent = content.classList.contains('hidden') ? 'Afficher les informations' : 'Cacher les informations';
+      });
+
+      // dynamic injection (if you want to update later)
+      const entreprise = {
+        adresse: "123 Rue de l'Événement, Abidjan, Côte d'Ivoire",
+        telephone: "+2250123456789",
+        email: "contact@kontrol.ci",
+        horaires: "Lun-Ven 08:00 - 18:00",
+        weather: {text: "Ensoleillé", temp: 28}
+      };
+
+      // Insert initial values (if content empty)
+      if(content.innerHTML.trim() === '') {
+        content.innerHTML = `
+          <p><strong>Adresse :</strong> ${entreprise.adresse}</p>
+          <p><strong>Téléphone :</strong> <a href="tel:${entreprise.telephone}" class="text-[var(--accent)] underline">${entreprise.telephone}</a></p>
+          <p><strong>Email :</strong> <a href="mailto:${entreprise.email}" class="text-[var(--accent)] underline">${entreprise.email}</a></p>
+          <p><strong>Horaires :</strong> ${entreprise.horaires}</p>
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3 bg-red-50 rounded-md"><div class="text-sm text-red-700">Météo (mock)</div><div id="weatherMini" class="text-lg font-bold">☀ ${entreprise.weather.temp}°C - ${entreprise.weather.text}</div></div>
+            <div class="p-3 bg-gray-50 rounded-md"><div class="text-sm">Moyenne</div><div id="miniAvg" class="text-lg font-bold text-[var(--accent)]">0.0 / 5</div><div id="miniCount" class="text-xs text-gray-500">0 avis</div></div>
+            <div class="p-3 bg-gray-50 rounded-md"><div class="text-sm">Temps de réponse</div><div class="text-lg font-bold">~24h</div></div>
+          </div>
+        `;
+      }
+    })();
+
+    // ====== Ratings & Reviews (localStorage) ======
+    (function(){
+      const LS_RAT = 'kontrol_ratings_v1';
+      const LS_REV = 'kontrol_reviews_v1';
+
+      const starBtns = $$('.star-btn');
+      const avgEl = $('#avgRating');
+      const cntEl = $('#ratingCount');
+      const miniAvg = $('#miniAvg');
+      const miniCount = $('#miniCount');
+
+      const reviewsList = $('#reviewsList');
+      const reviewForm = $('#reviewForm');
+      const clearBtn = $('#clearReviews');
+
+      // load data
+      let ratings = JSON.parse(localStorage.getItem(LS_RAT) || '[]');
+      let reviews = JSON.parse(localStorage.getItem(LS_REV) || '[]');
+
+      function calc(){
+        if(ratings.length === 0) return {avg:0,count:0};
+        const sum = ratings.reduce((a,b)=>a+b,0);
+        const avg = Math.round((sum/ratings.length)*10)/10;
+        return {avg, count: ratings.length};
+      }
+
+      function refreshRatingUI(){
+        const {avg, count} = calc();
+        avgEl.textContent = avg.toFixed(1);
+        cntEl.textContent = ${count} avis;
+        if(miniAvg) miniAvg.textContent = ${avg.toFixed(1)} / 5;
+        if(miniCount) miniCount.textContent = ${count} avis;
+      }
+
+      function refreshReviewsUI(){
+        reviewsList.innerHTML = '';
+        if(!reviews.length){
+          reviewsList.innerHTML = '<li class="text-gray-500">Pas encore d’avis — soyez le premier !</li>';
+          return;
+        }
+        reviews.slice().reverse().forEach(r => {
+          const li = document.createElement('li');
+          li.className = 'p-3 bg-white border rounded-md shadow-sm';
+          li.innerHTML = <div class="flex items-center justify-between"><strong>${escapeHtml(r.name)}</strong><span class="text-sm text-gray-500">${r.rating} ★</span></div><div class="mt-2 text-gray-700">${escapeHtml(r.message)}</div><div class="text-xs text-gray-400 mt-2">${new Date(r.date).toLocaleString()}</div>;
+          reviewsList.appendChild(li);
+        });
+      }
+
+      // initial refresh
+      refreshRatingUI();
+      refreshReviewsUI();
+
+      // star click -> add rating
+      starBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = Number(btn.dataset.value || btn.getAttribute('data-value'));
+          if(!val) return;
+          ratings.push(val);
+          localStorage.setItem(LS_RAT, JSON.stringify(ratings));
+          // visual fill
+          starBtns.forEach((s,i)=> s.textContent = (i < val) ? '★' : '☆');
+          refreshRatingUI();
+          showTinyToast('Merci pour votre note !');
+        });
+        btn.addEventListener('mouseenter', () => {
+          const val = Number(btn.dataset.value || btn.getAttribute('data-value'));
+          starBtns.forEach((s,i)=> s.textContent = (i < val) ? '★' : '☆');
+        });
+        btn.addEventListener('mouseleave', () => {
+          refreshRatingUI(); // reset
+          const {avg} = calc();
+          const r = Math.round(avg);
+          starBtns.forEach((s,i)=> s.textContent = (i < r) ? '★' : '☆');
+        });
+      });
+
+      // review submit
+      reviewForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const f = new FormData(reviewForm);
+        const name = f.get('name').trim();
+        const message = f.get('message').trim();
+        const rating = Number(f.get('rating')) || 5;
+        if(!name || !message) { alert('Nom et message requis'); return; }
+        const entry = {name, message, rating, date: new Date().toISOString()};
+        reviews.push(entry);
+        ratings.push(rating);
+        localStorage.setItem(LS_REV, JSON.stringify(reviews));
+        localStorage.setItem(LS_RAT, JSON.stringify(ratings));
+        reviewForm.reset();
+        refreshReviewsUI();
+        refreshRatingUI();
+        showTinyToast('Merci pour votre avis !');
+      });
+
+      // clear (dev button)
+      clearBtn.addEventListener('click', () => {
+        if(!confirm('Supprimer tous les avis et notes ? (dev)')) return;
+        reviews = []; ratings = [];
+        localStorage.removeItem(LS_REV); localStorage.removeItem(LS_RAT);
+        refreshReviewsUI(); refreshRatingUI();
+      });
+
+      // small helper: escape HTML when injecting
+      function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
+
+      function showTinyToast(text){
+        const t = document.createElement('div');
+        t.className = 'fixed bottom-6 right-6 bg-black text-white px-4 py-2 rounded-md z-60';
+        t.textContent = text;
+        document.body.appendChild(t);
+        setTimeout(()=> t.remove(), 2200);
+      }
+    })();
+
+    // ====== Small UX: smooth scroll for internal links ======
+    (function(){
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e){
+          const href = this.getAttribute('href');
+          if(href.length > 1){
+            e.preventDefault();
+            const el = document.querySelector(href);
+            if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+            history.replaceState(null, '', href);
+          }
+        });
+      });
+    })();
+
+    // End scripts
+  </script>
+</body>
+</html>

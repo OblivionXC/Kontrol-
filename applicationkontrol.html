@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Phone UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .phone-frame {
+            position: relative;
+            width: 320px;
+            height: 650px;
+            border-radius: 40px;
+            box-shadow: 0 0 0 10px #111, 
+                        0 0 0 14px #444,
+                        0 20px 50px rgba(0,0,0,0.8);
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .screen {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #111;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .camera {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00a8ff;
+            margin: 0 5px;
+        }
+        
+        .sensor {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff9d;
+            margin: 0 5px;
+        }
+        
+        .notification-bubble {
+            position: absolute;
+            background: #ff3e4d;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            top: 5px;
+            right: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .app-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .app-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(0, 168, 255, 0.7));
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px rgba(0, 168, 255, 0.7),
+                         0 0 10px rgba(0, 168, 255, 0.5);
+        }
+        
+        .power-btn {
+            position: absolute;
+            right: -5px;
+            top: 90px;
+            width: 5px;
+            height: 50px;
+            background: #444;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        
+        .volume-btn {
+            position: absolute;
+            left: -5px;
+            top: 110px;
+            width: 5px;
+            height: 70px;
+            background: #444;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        
+        .volume-btn::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 90px;
+            width: 5px;
+            height: 30px;
+            background: #444;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .home-bar {
+            height: 5px;
+            width: 80px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-900">
+    <div class="phone-frame">
+        <div class="volume-btn"></div>
+        <div class="power-btn"></div>
+        
+        <div class="screen">
+            <div class="notch">
+                <div class="sensor"></div>
+                <div class="camera"></div>
+            </div>
+            
+            <!-- Status Bar -->
+            <div class="flex justify-between items-center px-5 py-1">
+                <div class="text-white text-xs font-bold">9:41</div>
+                <div class="flex items-center space-x-1">
+                    <i class="fas fa-signal text-white text-xs"></i>
+                    <i class="fas fa-wifi text-white text-xs"></i>
+                    <div class="battery">
+                        <i class="fas fa-battery-three-quarters text-white text-xs"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notification Bubble -->
+            <div class="notification-bubble" id="notifBubble">3</div>
+            
+            <!-- Lock Screen -->
+            <div id="lockScreen" class="flex-1 flex flex-col items-center justify-center px-5">
+                <div class="text-white text-2xl font-bold mb-2">Thursday, June 15</div>
+                <div class="text-white text-6xl font-bold neon-text" id="time">10:24</div>
+                <div class="text-white mt-10 text-sm opacity-80">Swipe up to unlock</div>
+                <div class="home-bar"></div>
+            </div>
+            
+            <!-- Home Screen (initially hidden) -->
+            <div id="homeScreen" class="flex-1 p-5 hidden">
+                <div class="text-white font-bold mb-5">Good Morning</div>
+                
+                <!-- Weather Widget -->
+                <div class="bg-blue-900 bg-opacity-30 rounded-2xl p-4 mb-5 border border-blue-800 border-opacity-50">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="text-white text-sm">San Francisco</div>
+                            <div class="text-white text-3xl font-bold">23°C</div>
+                        </div>
+                        <div class="text-4xl">☀️</div>
+                        <div class="text-white text-xs text-right">
+                            <div>Mostly sunny</div>
+                            <div>H:26° L:18°</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- App Icons -->
+                <div class="grid grid-cols-4 gap-6 text-white text-center mt-8">
+                    <a href="#" class="app-icon" onclick="openApp('phone')">
+                        <i class="fas fa-phone fa-lg mb-1"></i>
+                        <div class="text-xs">Phone</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('messages')">
+                        <i class="fas fa-comment fa-lg mb-1"></i>
+                        <div class="text-xs">Messages</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('camera')">
+                        <i class="fas fa-camera fa-lg mb-1"></i>
+                        <div class="text-xs">Camera</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('browser')">
+                        <i class="fas fa-globe fa-lg mb-1"></i>
+                        <div class="text-xs">Browser</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('music')">
+                        <i class="fas fa-music fa-lg mb-1"></i>
+                        <div class="text-xs">Music</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('settings')">
+                        <i class="fas fa-cog fa-lg mb-1"></i>
+                        <div class="text-xs">Settings</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('photos')">
+                        <i class="fas fa-image fa-lg mb-1"></i>
+                        <div class="text-xs">Photos</div>
+                    </a>
+                    <a href="#" class="app-icon" onclick="openApp('appStore')">
+                        <i class="fas fa-shopping-bag fa-lg mb-1"></i>
+                        <div class="text-xs">App Store</div>
+                    </a>
+                </div>
+                
+                <!-- Dock -->
+                <div class="absolute bottom-5 left-5 right-5 bg-blue-900 bg-opacity-30 rounded-2xl p-3 border border-blue-800 border-opacity-50">
+                    <div class="grid grid-cols-4 text-white text-center">
+                        <a href="#" class="app-icon">
+                            <i class="fas fa-home fa-lg"></i>
+                        </a>
+                        <a href="#" class="app-icon" onclick="openApp('contacts')">
+                            <i class="fas fa-user fa-lg"></i>
+                        </a>
+                        <a href="#" class="app-icon" onclick="openApp('mail')">
+                            <i class="fas fa-envelope fa-lg"></i>
+                        </a>
+                        <a href="#" class="app-icon" onclick="openApp('maps')">
+                            <i class="fas fa-map-marker-alt fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Screens (initially hidden) -->
+            <div id="phoneApp" class="flex-1 p-5 hidden bg-gray-800">
+                <div class="flex justify-between items-center mb-5">
+                    <button onclick="goBack()" class="text-white"><i class="fas fa-arrow-left"></i></button>
+                    <div class="text-white font-bold">Phone</div>
+                    <div></div>
+                </div>
+                <div class="text-white text-center mt-20">
+                    <i class="fas fa-phone fa-5x text-blue-400 mb-10"></i>
+                    <div>Tap the keypad to make calls</div>
+                </div>
+            </div>
+            
+            <div id="messagesApp" class="flex-1 p-5 hidden bg-gray-800">
+                <div class="flex justify-between items-center mb-5">
+                    <button onclick="goBack()" class="text-white"><i class="fas fa-arrow-left"></i></button>
+                    <div class="text-white font-bold">Messages</div>
+                    <div></div>
+                </div>
+                <div class="text-white text-center mt-20">
+                    <i class="fas fa-comment fa-5x text-blue-400 mb-10"></i>
+                    <div>Your conversations will appear here</div>
+                </div>
+            </div>
+            
+            <!-- More app screens would go here -->
+            
+        </div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('time').textContent = timeString;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // Swipe to unlock functionality
+        const lockScreen = document.getElementById('lockScreen');
+        let startY;
+        
+        lockScreen.addEventListener('touchstart', e => {
+            startY = e.touches[0].clientY;
+        });
+        
+        lockScreen.addEventListener('touchmove', e => {
+            const currentY = e.touches[0].clientY;
+            if (startY - currentY > 50) {  // Swipe up
+                unlockPhone();
+            }
+        });
+        
+        lockScreen.addEventListener('click', unlockPhone);
+        
+        function unlockPhone() {
+            lockScreen.classList.add('hidden');
+            document.getElementById('homeScreen').classList.remove('hidden');
+            
+            // Animate notification bubble
+            const notif = document.getElementById('notifBubble');
+            notif.style.display = 'none';
+            setTimeout(() => {
+                notif.style.display = 'flex';
+                notif.textContent = '0';
+                notif.style.background = '#00ff9d';
+            }, 500);
+        }
+        
+        // App functions
+        function openApp(appName) {
+            document.getElementById('homeScreen').classList.add('hidden');
+            document.getElementById(appName + 'App').classList.remove('hidden');
+        }
+        
+        function goBack() {
+            document.querySelectorAll('[id$="App"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            document.getElementById('homeScreen').classList.remove('hidden');
+        }
+        
+        // Battery simulation
+        setInterval(() => {
+            const battery = document.querySelector('.battery');
+            const icons = ['fa-battery-empty', 'fa-battery-quarter', 'fa-battery-half', 
+                          'fa-battery-three-quarters', 'fa-battery-full'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            battery.innerHTML = `<i class="fas ${randomIcon} text-white text-xs"></i>`;
+        }, 5000);
+    </script>
+</body>
+</html>

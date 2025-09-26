@@ -1,0 +1,36 @@
+<!-- Bouton d'action animé -->
+<a href="https://tonsite.com" target="_blank" class="action-btn">
+  🚀 Visiter notre site
+</a>
+
+<style>
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(0,86,179,0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,86,179,0.5); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(0,86,179,0.7); }
+  }
+
+  .action-btn {
+    display: inline-block;
+    background-color: #0056b3; /* Couleur principale */
+    color: white;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite; /* Animation de pulsation */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+
+  .action-btn:hover {
+    background-color: #003f82; /* Changement au survol */
+    transform: translateY(-5px) scale(1.08); /* Effet de rebond */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  }
+
+  .action-btn:active {
+    transform: scale(0.98); /* Effet clic */
+  }
+</style>
