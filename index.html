@@ -69,7 +69,7 @@
 <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">À propos de <span class=logo-text>K</span>ontrol</h2>
 <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
 <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-K'ontrol est une entreprise spécialisée dans la location de mobilier et de vaisselle haut de gamme.Nous faisont aussi la location de logistique evenementiel. Nous accompagnons vos événements avec des prestations sur mesure et une attention particulière aux détails.
+K'ontrol est une entreprise spécialisée dans la location de mobilier et de vaisselle haut de gamme. Nous accompagnons vos événements avec des prestations sur mesure et une attention particulière aux détails.
 </p>
 </div>
 <div class="grid md:grid-cols-3 gap-8">
@@ -173,73 +173,103 @@ K'ontrol est une entreprise spécialisée dans la location de mobilier et de vai
 
     </div>
   </div>
+<section id="galerie" class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Notre Galerie</h2>
+      <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+      <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+        Découvrez notre sélection de meubles et vaisselle pour inspirer votre prochain événement.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+      <!-- Galerie 1 -->
+      <div>
+        <button onclick="toggleGallery(1)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">📸 Galerie 1</button>
+        <div id="gallery1" class="mt-4 hidden">
+          <img src="salon.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="table.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+
+      <!-- Galerie 2 -->
+      <div>
+        <button onclick="toggleGallery(2)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">🌄 Galerie 2</button>
+        <div id="gallery2" class="mt-4 hidden">
+          <img src="tente1.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="tente2.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+
+      <!-- Galerie 3 -->
+      <div>
+        <button onclick="toggleGallery(3)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">🍽️ Galerie 3</button>
+        <div id="gallery3" class="mt-4 hidden">
+          <img src="sl.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="tr.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+
+      <!-- Galerie 4 -->
+      <div>
+        <button onclick="toggleGallery(4)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">🎪 Galerie 4</button>
+        <div id="gallery4" class="mt-4 hidden">
+          <img src="tente.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="tente3.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+
+      <!-- Galerie 5 -->
+      <div>
+        <button onclick="toggleGallery(5)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">🪑 Galerie 5</button>
+        <div id="gallery5" class="mt-4 hidden">
+          <img src="tl.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="table.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+
+      <!-- Galerie 6 -->
+      <div>
+        <button onclick="toggleGallery(6)" class="bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-dark transition">🎉 Galerie 6</button>
+        <div id="gallery6" class="mt-4 hidden">
+          <img src="tente2.jpg" alt="Image 1" class="rounded-lg shadow-md mx-auto mb-2 w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+          <img src="tente3.jpg" alt="Image 2" class="rounded-lg shadow-md mx-auto w-full h-64 object-cover cursor-pointer" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<section id=galerie class="py-20 bg-white">
-<div class="container mx-auto px-4">
-<div class="text-center mb-16" data-aos=fade-up>
-<h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Notre Galerie</h2>
-<div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
-<p class="text-lg text-gray-700 max-w-3xl mx-auto">
-Découvrez notre sélection de meubles et vaisselle pour inspirer votre prochain événement.
-</p>
+
+<!-- Lightbox plein écran -->
+<div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Aperçu" class="max-w-full max-h-full rounded-lg shadow-lg">
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src="salon.jpg" alt="Chaise design" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=200>
-<img src=sl.jpg alt="Service de vaisselle" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tente1.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=100>
-<img src="table.jpg" alt="Apple" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tr.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=100>
-<img src="tente.jpg" alt="Apple" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in data-aos-delay=200>
-<img src=tente2.jpg alt="Verres cristal" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tl.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-<div class="gallery-item rounded-lg overflow-hidden shadow-md relative group" data-aos=zoom-in>
-<img src=tente3.jpg alt="Buffet moderne" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-<h3 class="text-white text-xl font-bold"></h3>
-</div>
-</div>
-</div>
-</div>
+
+<script>
+  function toggleGallery(id) {
+    const gallery = document.getElementById('gallery' + id);
+    gallery.classList.toggle('hidden');
+  }
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.remove('hidden');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.add('hidden');
+    document.getElementById('lightbox-img').src = '';
+  }
+</script>
+</section>
+
+<script>
+  function toggleGallery(id) {
+    const gallery = document.getElementById('gallery' + id);
+    gallery.classList.toggle('hidden');
+  }
+</script>
 </section>
 <section class="py-20 bg-gray-100">
 <div class="container mx-auto px-4">
